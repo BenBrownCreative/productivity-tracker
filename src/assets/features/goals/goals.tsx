@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { presetGoals } from "../assets/presetGoals";
-import AddGoalsModal from "./addGoalsModal";
-import { type Goal } from "./goal";
+import { presetGoals } from "./utils/presetGoals";
+import AddGoalsModal from "./components/addGoalsModal";
+import { type Goal } from "./components/goal";
 import styled from "styled-components";
 
 const Goals = () => {
@@ -19,7 +19,7 @@ const Goals = () => {
 
   return (
     <div>
-      <h1>Goals</h1>
+      <h1>Today's Goals</h1>
       <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
       {/* <button onClick={addGoals}>Add Goals</button> // open modal to select */}
       goals

@@ -1,28 +1,37 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import styled from "styled-components";
 import "./App.css";
-import Goals from "./components/goals";
+import Goals from "./assets/features/goals/goals";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const AppWrapper = styled.div`
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+  `;
+  const Section = styled.div`
+    max-width: 300px;
+    padding: 20px;
+  `;
 
   return (
-    <>
-      <Goals />
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
+    <AppWrapper>
+      <Section>
+        <h1>Notes</h1>
+        <p>styleguide</p>
+        <p>goals section: add goals, check them off</p>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          daily log of events, be able to select from goal and track time,
+          custom description
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      </Section>
+      <Section>
+        <h1>Ideas</h1>
+        <p>AI integration: setting goals</p>
+        <p>tracking goals history</p>
+        <p>need a way to preserve data</p>
+      </Section>
+      <Goals />
+    </AppWrapper>
   );
 }
 
