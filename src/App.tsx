@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import Goals from "./assets/features/goals/goals";
 import Header from "./components/header";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,12 +9,14 @@ function App() {
   const AppWrapper = styled.div`
     display: flex;
     column-gap: 1rem;
-    align-items: center;
+    align-items: top;
   `;
 
   const Section = styled.div`
     max-width: 300px;
     padding: 2rem;
+    /* justify-content: top; */
+    border: 1px solid #333538;
   `;
 
   return (
@@ -23,8 +25,8 @@ function App() {
         <CssBaseline />
         <Header />
 
-        <div>
-          <div>
+        <AppWrapper>
+          <Section>
             <h1>Notes</h1>
             <p>styleguide</p>
             <p>goals section: add goals, check them off</p>
@@ -32,7 +34,7 @@ function App() {
               daily log of events, be able to select from goal and track time,
               custom description
             </p>
-          </div>
+          </Section>
           <Section>
             <h1>Ideas</h1>
             <p>AI integration: setting goals</p>
@@ -40,7 +42,7 @@ function App() {
             <p>need a way to preserve data</p>
           </Section>
           <Goals />
-        </div>
+        </AppWrapper>
       </Palette>
     </>
   );

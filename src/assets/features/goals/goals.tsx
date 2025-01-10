@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AddGoalsModal from "./components/addGoalsModal";
 import { type Goal } from "./components/goal";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import Button from "@mui/material/Button";
 
 const Goals = () => {
@@ -21,7 +21,11 @@ const Goals = () => {
     <div>
       <h1>Today's Goals</h1>
       {/* <button onClick={() => setIsModalOpen(true)}>Open Modal</button> */}
-      <Button variant="contained" onClick={() => setIsModalOpen(true)}>
+      <Button
+        size="small"
+        variant="contained"
+        onClick={() => setIsModalOpen(true)}
+      >
         Manage Goals
       </Button>
       {/* <button onClick={addGoals}>Add Goals</button> // open modal to select */}

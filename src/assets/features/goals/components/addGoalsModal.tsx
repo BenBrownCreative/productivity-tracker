@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { presetGoals } from "../utils/presetGoals";
 import GoalCard, { type Goal } from "../components/goal";
 
