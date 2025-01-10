@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { presetGoals } from "../assets/presetGoals";
-import GoalCard, { type Goal } from "../assets/features/goals/goal";
+import { presetGoals } from "../utils/presetGoals";
+import GoalCard, { type Goal } from "../components/goal";
 
 type ModalProps = {
   dismiss: () => void;
