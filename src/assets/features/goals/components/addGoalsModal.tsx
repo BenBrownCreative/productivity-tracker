@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { presetGoals } from "../utils/presetGoals";
 import GoalCard, { type Goal } from "../components/goal";
+import { Button } from "@mui/material";
 
 type ModalProps = {
   dismiss: () => void;
@@ -16,12 +17,11 @@ const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
 `;
 
 const ModalContainer = styled.div`
-  background-color: #333538;
+  background-color: var(--colors-background);
   margin: 5% auto;
   padding: 20px;
   border-radius: 10px;
@@ -45,8 +45,11 @@ const AddGoalsModal = ({ dismiss, addGoal }: ModalProps) => {
           console.log(goal);
 
           return (
-            <GoalWrapper>
-              <button onClick={() => addGoal(goal)}>Add</button>
+            <GoalWrapper key={goal.name}>
+              <Button onClick={() => addGoal(goal)} variant="contained">
+                {/* icon ? */}
+                Add
+              </Button>
               <GoalCard goal={goal} />
             </GoalWrapper>
           );

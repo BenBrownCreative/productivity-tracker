@@ -10,19 +10,20 @@ function App() {
     display: flex;
     column-gap: 1rem;
     align-items: top;
+    background-color: var(--colors-background);
   `;
 
   const Section = styled.div`
     max-width: 300px;
     padding: 2rem;
     /* justify-content: top; */
-    border: 1px solid #333538;
+    border: 1px solid var(--colors-primary);
   `;
 
   return (
     <>
       <Palette>
-        <CssBaseline />
+        {/* <CssBaseline /> */}
         <Header />
 
         <AppWrapper>

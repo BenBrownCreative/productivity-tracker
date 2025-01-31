@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 
 const Header = () => {
   const Wrapper = styled.header`
-    background-color: #333538;
+    background-color: var(--colors-background);
     color: white;
   `;
+
   return (
     <Wrapper>
       <h1>Header</h1>

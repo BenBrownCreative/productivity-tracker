@@ -1,26 +1,18 @@
-/* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+#root {
+  --colors-primary: rgb(35, 104, 127);
+  --colors-primary-dark: rgb(29, 70, 84);
+  --colors-secondary: rgb(120, 65, 13);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --colors-background: #14262f;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --base-size: 4;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-} */
-
-:root {
-  color-scheme: dark;
+  background-color: #14262f;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
+
+/* lets just use css variables for colors and other variables here 
+  -- then create reusable components for buttons, inputs, etc
+*/

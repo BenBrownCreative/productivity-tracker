@@ -3,10 +3,12 @@ import AddGoalsModal from "./components/addGoalsModal";
 import { type Goal } from "./components/goal";
 import styled from "@emotion/styled";
 import Button from "@mui/material/Button";
+import { Remove } from "@mui/icons-material";
 
 const Goals = () => {
   const [goals, setGoals] = useState<Goal[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const addGoal = (goal: Goal) => {
     setGoals([...goals, goal]);
@@ -17,45 +19,49 @@ const Goals = () => {
     align-items: center;
   `;
 
+  const StyledButton = styled(Button)`
+    color: white;
+    background-color: var(--colors-primary);
+    &:hover {
+      background-color: theme;
+    }
+  `;
+
   return (
     <div>
       <h1>Today's Goals</h1>
-      {/* <button onClick={() => setIsModalOpen(true)}>Open Modal</button> */}
-      <Button
+      <StyledButton
         size="small"
         variant="contained"
         onClick={() => setIsModalOpen(true)}
       >
         Manage Goals
-      </Button>
-      {/* <button onClick={addGoals}>Add Goals</button> // open modal to select */}
+      </StyledButton>
       goals
       {goals.map(goal => (
         <GoalWrapper>
-          {/* <button onClick={() => setGoals(goals.filter(g => g !== goal))}>
-            Remove
-          </button> */}
-          <Button
+          {/* this needs to be toggleable by an edit */}
+          <StyledButton
             onClick={() => setGoals(goals.filter(g => g !== goal))}
-            sx={[
-              theme => ({
-                color: "#fff",
-                backgroundColor: theme.palette.primary.main,
-                ...theme.applyStyles("dark", {
-                  backgroundColor: theme.palette.secondary.main,
-                }),
-                "&:hover": {
-                  boxShadow: theme.shadows[3],
-                  backgroundColor: theme.palette.primary.dark,
-                  ...theme.applyStyles("dark", {
-                    backgroundColor: theme.palette.secondary.dark,
-                  }),
-                },
-              }),
-            ]}
+            // sx={[
+            //   theme => ({
+            //     color: "#fff",
+            //     backgroundColor: theme.palette.primary.main,
+            //     ...theme.applyStyles("dark", {
+            //       backgroundColor: theme.palette.secondary.main,
+            //     }),
+            //     "&:hover": {
+            //       boxShadow: theme.shadows[3],
+            //       backgroundColor: theme.palette.primary.dark,
+            //       ...theme.applyStyles("dark", {
+            //         backgroundColor: theme.palette.secondary.dark,
+            //       }),
+            //     },
+            //   }),
+            // ]}
           >
-            Remove
-          </Button>
+            <Remove />
+          </StyledButton>
           <div key={goal.name}>{goal.name}</div>
         </GoalWrapper>
       ))}
