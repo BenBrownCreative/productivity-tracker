@@ -10,7 +10,13 @@ const darkTheme = {
   mode: "dark",
   primary: {
     // light?: string;
-    main: "#000",
+    main: "#23687f",
+    // dark?: string;
+    // contrastText?: string;
+  },
+  secondary: {
+    // light?: string;
+    main: "#a25308",
     // dark?: string;
     // contrastText?: string;
   },

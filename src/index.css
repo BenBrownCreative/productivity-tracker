@@ -1,7 +1,8 @@
 #root {
-  --colors-primary: rgb(35, 104, 127);
-  --colors-primary-dark: rgb(29, 70, 84);
-  --colors-secondary: rgb(120, 65, 13);
+  --colors-primary: #23687f;
+  --colors-primary-dark: #1d4654;
+  --colors-secondary: #a25308;
+  --colors-secondary-dark: #78410d;
 
   --colors-background: #14262f;
 

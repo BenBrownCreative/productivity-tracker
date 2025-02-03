@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import Goals from "./assets/features/goals/goals";
 import Header from "./components/header";
-import CssBaseline from "@mui/material/CssBaseline";
 
 import Palette from "./utils/palette";
 
@@ -16,16 +15,13 @@ function App() {
   const Section = styled.div`
     max-width: 300px;
     padding: 2rem;
-    /* justify-content: top; */
     border: 1px solid var(--colors-primary);
   `;
 
   return (
     <>
       <Palette>
-        {/* <CssBaseline /> */}
         <Header />
-
         <AppWrapper>
           <Section>
             <h1>Notes</h1>

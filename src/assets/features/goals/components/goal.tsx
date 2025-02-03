@@ -1,10 +1,16 @@
 import styled from "@emotion/styled";
 
+export type GoalProgress = {
+  value: number;
+  goal: number;
+};
+
 export type Goal = {
   name: string;
   description: string;
   icon: string;
   type: string;
+  progress?: GoalProgress;
 };
 
 type GoalProps = {

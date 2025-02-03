@@ -6,6 +6,12 @@ const theme = createTheme({
   cssVariables: true,
 });
 
+// const theme2 = createTheme({
+//   palette: {
+//     primary: { main: "#aaa" },
+//   },
+// });
+
 export default function Palette({ children }) {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }

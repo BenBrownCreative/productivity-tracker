@@ -2,8 +2,9 @@ import { useState } from "react";
 import AddGoalsModal from "./components/addGoalsModal";
 import { type Goal } from "./components/goal";
 import styled from "@emotion/styled";
-import Button from "@mui/material/Button";
+import { Button, Checkbox } from "@mui/material";
 import { Remove } from "@mui/icons-material";
+import GoalProgress from "./components/goalProgress";
 
 const Goals = () => {
   const [goals, setGoals] = useState<Goal[]>([]);
@@ -37,32 +38,17 @@ const Goals = () => {
       >
         Manage Goals
       </StyledButton>
-      goals
       {goals.map(goal => (
-        <GoalWrapper>
+        <GoalWrapper key={goal.name}>
           {/* this needs to be toggleable by an edit */}
-          <StyledButton
-            onClick={() => setGoals(goals.filter(g => g !== goal))}
-            // sx={[
-            //   theme => ({
-            //     color: "#fff",
-            //     backgroundColor: theme.palette.primary.main,
-            //     ...theme.applyStyles("dark", {
-            //       backgroundColor: theme.palette.secondary.main,
-            //     }),
-            //     "&:hover": {
-            //       boxShadow: theme.shadows[3],
-            //       backgroundColor: theme.palette.primary.dark,
-            //       ...theme.applyStyles("dark", {
-            //         backgroundColor: theme.palette.secondary.dark,
-            //       }),
-            //     },
-            //   }),
-            // ]}
-          >
+          {/* <StyledButton onClick={() => setGoals(goals.filter(g => g !== goal))}>
             <Remove />
-          </StyledButton>
-          <div key={goal.name}>{goal.name}</div>
+          </StyledButton> */}
+          <Checkbox color="secondary" />
+          <div>{goal.name}</div>
+          {/* display progress */}
+
+          {goal?.progress && <GoalProgress progress={goal.progress} />}
         </GoalWrapper>
       ))}
       {isModalOpen && (
