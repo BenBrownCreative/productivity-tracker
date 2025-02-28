@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { presetGoals } from "../utils/presetGoals";
-import GoalCard, { type Goal } from "../components/goal";
+import GoalCard, { type Goal } from "./goal";
 import { Button } from "@mui/material";
 
 type ModalProps = {

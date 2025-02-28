@@ -16,7 +16,7 @@ const Goals = () => {
   };
   const GoalWrapper = styled.div`
     display: flex;
-    column-gap: 10px;
+    column-gap: 1rem;
     align-items: center;
   `;
 

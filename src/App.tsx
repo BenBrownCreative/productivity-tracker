@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import Goals from "./assets/features/goals/goals";
+import Goals from "./components/goals/goals";
 import Header from "./components/header";
 
 import Palette from "./utils/palette";
