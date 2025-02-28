@@ -3,42 +3,38 @@ import Goals from "./components/goals/goals";
 import Header from "./components/header";
 
 import Palette from "./utils/palette";
+import Log from "./components/log";
+import { Title } from "./utils/commonStyles";
 
-function App() {
-  const AppWrapper = styled.div`
-    column-gap: 1rem;
-    align-items: top;
-    background-color: var(--colors-background);
-    padding: 2rem;
-  `;
-  const BodyWrapper = styled.div`
-    display: flex;
-    column-gap: 1rem;
-    align-items: top;
-  `;
+const AppWrapper = styled.div`
+  column-gap: 1rem;
+  align-items: top;
+  background-color: var(--colors-background);
+  padding: 2rem;
+`;
+const BodyWrapper = styled.div`
+  display: flex;
+  column-gap: 1rem;
+  align-items: top;
+  margin-top: 2rem;
+`;
+const Section = styled.div`
+  min-width: 300px;
+  padding: 1rem;
+  border-right: 1px solid var(--colors-primary);
+`;
 
-  const Section = styled.div`
-    max-width: 300px;
-    padding: 2rem;
-    border: 1px solid var(--colors-primary);
-  `;
-
+const App = () => {
   return (
     <AppWrapper>
       <Palette>
         <Header />
         <BodyWrapper>
           <Section>
-            <h1>Notes</h1>
-            <p>styleguide</p>
-            <p>goals section: add goals, check them off</p>
-            <p>
-              daily log of events, be able to select from goal and track time,
-              custom description
-            </p>
+            <Log />
           </Section>
           <Section>
-            <h1>Ideas</h1>
+            <Title>Daily Notes</Title>
             <p>AI integration: setting goals</p>
             <p>tracking goals history</p>
             <p>need a way to preserve data</p>
@@ -48,6 +44,6 @@ function App() {
       </Palette>
     </AppWrapper>
   );
-}
+};
 
 export default App;

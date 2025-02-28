@@ -8,7 +8,6 @@ export type GoalProgress = {
 export type Goal = {
   name: string;
   description: string;
-  icon: string;
   type: string;
   progress?: GoalProgress;
 };

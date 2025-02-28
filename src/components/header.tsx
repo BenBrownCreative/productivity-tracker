@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { readableDate, readableTime } from "../utils/date";
 
 const Header = () => {
   const Wrapper = styled.header`
@@ -15,16 +16,6 @@ const Header = () => {
     margin-left: auto;
     margin: 0 2rem 0 auto;
   `;
-
-  const readableDate = new Date().toLocaleString("en-US", {
-    month: "long",
-    day: "numeric",
-  });
-  const readableTime = new Date().toLocaleString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  });
 
   return (
     <Wrapper>
