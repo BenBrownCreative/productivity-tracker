@@ -6,10 +6,15 @@ import Palette from "./utils/palette";
 
 function App() {
   const AppWrapper = styled.div`
-    display: flex;
     column-gap: 1rem;
     align-items: top;
     background-color: var(--colors-background);
+    padding: 2rem;
+  `;
+  const BodyWrapper = styled.div`
+    display: flex;
+    column-gap: 1rem;
+    align-items: top;
   `;
 
   const Section = styled.div`
@@ -19,10 +24,10 @@ function App() {
   `;
 
   return (
-    <>
+    <AppWrapper>
       <Palette>
         <Header />
-        <AppWrapper>
+        <BodyWrapper>
           <Section>
             <h1>Notes</h1>
             <p>styleguide</p>
@@ -39,9 +44,9 @@ function App() {
             <p>need a way to preserve data</p>
           </Section>
           <Goals />
-        </AppWrapper>
+        </BodyWrapper>
       </Palette>
-    </>
+    </AppWrapper>
   );
 }
 
