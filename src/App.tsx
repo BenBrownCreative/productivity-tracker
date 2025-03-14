@@ -38,6 +38,7 @@ const App = () => {
             <p>AI integration: setting goals</p>
             <p>tracking goals history</p>
             <p>need a way to preserve data</p>
+            <p>Log: remove log?</p>
           </Section>
           <Goals />
         </BodyWrapper>

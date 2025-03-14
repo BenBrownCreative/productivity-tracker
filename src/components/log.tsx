@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import { Title } from "../utils/commonStyles";
 import { AddCircleOutline } from "@mui/icons-material";
-import { readableTime } from "../utils/date";
+import { getReadableTime } from "../utils/date";
 import { presetGoals } from "./goals/utils/presetGoals";
 
 const LogItem = styled.div`
@@ -87,8 +87,7 @@ const Log = () => {
   };
 
   const handleSetLog = (newLog: string) => {
-    const time = readableTime;
-    setLog(prev => [...prev, { time, message: newLog }]);
+    setLog(prev => [...prev, { time: getReadableTime(), message: newLog }]);
     setOpen(false);
   };
 

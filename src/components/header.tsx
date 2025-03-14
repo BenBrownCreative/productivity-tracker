@@ -1,7 +1,18 @@
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import { readableDate, readableTime } from "../utils/date";
+import { getReadableDate, getReadableTime } from "../utils/date";
 
 const Header = () => {
+  const [currentTime, setCurrentTime] = useState(getReadableTime);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(getReadableTime());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   const Wrapper = styled.header`
     background-color: var(--colors-background);
     color: white;
@@ -19,8 +30,8 @@ const Header = () => {
 
   return (
     <Wrapper>
-      <h1>{readableDate}</h1>
-      <p>{readableTime}</p>
+      <h1>{getReadableDate()}</h1>
+      <p>{currentTime}</p>
       <InspireText>
         todo: something inspirational here. verse of the day
       </InspireText>
