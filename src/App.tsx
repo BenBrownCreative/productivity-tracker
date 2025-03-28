@@ -1,13 +1,12 @@
 import styled from "@emotion/styled";
 import Goals from "./components/goals/goals";
 import Header from "./components/header";
-
 import Palette from "./utils/palette";
 import Log from "./components/log";
-import { Title } from "./utils/commonStyles";
 import { useState } from "react";
 import { presetGoals } from "./components/goals/utils/presetGoals";
 import { Goal } from "./models";
+import Notes from "./components/notes";
 
 const AppWrapper = styled.div`
   column-gap: 1rem;
@@ -21,10 +20,16 @@ const BodyWrapper = styled.div`
   align-items: top;
   margin-top: 2rem;
 `;
-const Section = styled.div`
+
+type SectionProps = {
+  maxWidth?: string;
+};
+
+const Section = styled.div<SectionProps>`
   min-width: 300px;
   padding: 1rem;
   border-right: 1px solid var(--colors-primary);
+  max-width: ${props => props.maxWidth || "none"};
 `;
 
 const App = () => {
@@ -39,18 +44,11 @@ const App = () => {
             <Log goals={goals} setGoals={setGoals} />
           </Section>
           <Section>
-            <Title>Daily Notes</Title>
-            <p>AI integration: setting goals</p>
-            <p>tracking goals history</p>
-            <p>need a way to preserve data</p>
-            <p>Log: remove log?</p>
-            <p>Admin Task: call bank to activate iphone use of credit card</p>
-            <p>
-              would be nice to see how long something took once the next log
-              active
-            </p>
+            <Notes />
           </Section>
-          <Goals goals={goals} setGoals={setGoals} />
+          <Section maxWidth="40%">
+            <Goals goals={goals} setGoals={setGoals} />
+          </Section>
         </BodyWrapper>
       </Palette>
     </AppWrapper>
