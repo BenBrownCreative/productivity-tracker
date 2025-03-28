@@ -1,16 +1,5 @@
 import styled from "@emotion/styled";
-
-export type GoalProgress = {
-  value: number;
-  goal: number;
-};
-
-export type Goal = {
-  name: string;
-  description: string;
-  type: string;
-  progress?: GoalProgress;
-};
+import { type Goal } from "../../../models";
 
 type GoalProps = {
   goal: Goal;
@@ -26,7 +15,6 @@ const GoalCard = ({ goal }: GoalProps) => {
     <GoalWrapper key={goal.name}>
       <div>{goal.name}</div>
       {/* <div>{goal.description}</div> */}
-      <div>{goal.icon}</div>
       {/* <div>{goal.type}</div> */}
     </GoalWrapper>
   );

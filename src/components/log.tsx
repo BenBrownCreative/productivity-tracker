@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { SetStateAction, useState, Dispatch } from "react";
 import { Title } from "../utils/commonStyles";
 import { AddCircleOutline } from "@mui/icons-material";
-import { getReadableTime } from "../utils/date";
-import { presetGoals } from "./goals/utils/presetGoals";
+import { getElapsedMinutes, getReadableTime } from "../utils/date";
+import type { Goal } from "../models/goal";
 
 const LogItem = styled.div`
   display: flex;
@@ -57,28 +57,42 @@ const LogPill = styled.div`
   width: fit-content;
   white-space: nowrap;
 `;
+const LogPillSecondary = styled.div`
+  background-color: var(--colors-secondary);
+  color: white;
+  padding: 0.5rem 1rem;
+  /* margin: 0.5rem; */
+  border-radius: 2rem;
+  width: fit-content;
+  white-space: nowrap;
+`;
 
 type Log = {
-  time: string;
+  time: number;
   message: string; // this will be a string or a goal so we can link to it and update progress
 };
 
 const exampleLog = [
   {
-    time: "7:57 AM",
+    time: 1743177806468,
     message: "Planning",
   },
   {
-    time: "8:10 AM",
+    time: 1743178188228,
     message: "Bible reading",
   },
   {
-    time: "8:30 AM",
+    time: 1743178101165,
     message: "Code",
   },
 ];
 
-const Log = () => {
+type Props = {
+  goals: Goal[];
+  setGoals: Dispatch<SetStateAction<Goal[]>>;
+};
+
+const Log = ({ goals, setGoals }: Props) => {
   const [log, setLog] = useState<Log[]>(exampleLog);
   const [open, setOpen] = useState(false);
 
@@ -86,8 +100,81 @@ const Log = () => {
     setOpen(true);
   };
 
+  const handleSetLogAndUpdateGoalProgress = (newLog: string) => {
+    updateGoalProgress();
+    handleSetLog(newLog);
+  };
+
+  const updateGoalProgress = () => {
+    const currentLog = log.slice(-1)[0];
+    // find the goal that matches the current log
+    const currentGoal = goals.find(goal => goal.name === currentLog.message);
+
+    //   const getPromptNum = () => {
+    //     return prompt(
+    //       `How many ${currentGoal.name} did you do?`,
+    //       `${currentGoal.progress.value}`
+    //     );
+    // }
+
+    if (currentGoal) {
+      function updateGoalByType(goal: Goal) {
+        switch (goal.type) {
+          case "number": {
+            const input = prompt(`How many ${currentGoal?.name} did you do?`);
+            const value = parseInt(input || "0", 10); // Convert input to a number
+            if (isNaN(value)) {
+              alert("Please enter a valid number.");
+              return goal; // Return the original goal if input is invalid
+            }
+            return {
+              ...goal,
+              progress: {
+                ...goal.progress,
+                value: value + goal.progress.value,
+              },
+            };
+          }
+          case "toggle":
+            return {
+              ...goal,
+              progress: {
+                ...goal.progress,
+                value: 1,
+              },
+            };
+          case "timed":
+            return {
+              ...goal,
+              progress: {
+                ...goal.progress,
+                value:
+                  goal.progress.value +
+                  getElapsedMinutes(Date.now(), currentLog.time),
+              },
+            };
+          default:
+            return goal;
+        }
+      }
+
+      const updatedGoal = updateGoalByType(currentGoal);
+
+      setGoals(prev =>
+        prev.map(goal =>
+          goal.name === currentLog.message ? updatedGoal : goal
+        )
+      );
+
+      if (currentGoal.type === "timed") {
+        return;
+      }
+    }
+  };
+
   const handleSetLog = (newLog: string) => {
-    setLog(prev => [...prev, { time: getReadableTime(), message: newLog }]);
+    // console.log("old log", log, newLog);
+    setLog(prev => [...prev, { time: Date.now(), message: newLog }]);
     setOpen(false);
   };
 
@@ -99,36 +186,38 @@ const Log = () => {
       </TitleWrapper>
 
       {log.map(item => (
-        <LogItem>
-          <p>{item.time}</p>
+        <LogItem key={item.time}>
+          <p>{getReadableTime(item.time)}</p>
           <p>{item.message}</p>
         </LogItem>
       ))}
 
       {open && (
         <>
-          <StyledModal
-          // open={open}
-          // onClose={() => setOpen(false)}
-          // aria-labelledby="modal-modal-title"
-          // aria-describedby="modal-modal-description"
-          >
+          <StyledModal>
             <h3>Logging Time</h3>
             <p>Goals: this should pull from goals</p>
             <PillWrapper>
-              <LogPill onClick={() => handleSetLog(presetGoals.coding.name)}>
-                {presetGoals.coding.name}
-              </LogPill>
-              <LogPill onClick={() => handleSetLog(presetGoals.pushUps.name)}>
-                {presetGoals.pushUps.name}
-              </LogPill>
-              <LogPill>{presetGoals.quietTime.name}</LogPill>
-              <LogPill>{presetGoals.pushUps.name}</LogPill>
-              <LogPill>{presetGoals.quietTime.name}</LogPill>
+              {Object.values(goals).map(goal => {
+                return (
+                  <LogPill
+                    onClick={() => handleSetLogAndUpdateGoalProgress(goal.name)}
+                    key={goal.name}
+                  >
+                    {goal.name}
+                  </LogPill>
+                );
+              })}
             </PillWrapper>
+            <p>Other</p>
+
             <PillWrapper>
-              <LogPill>Lunch</LogPill>
-              <LogPill>Break</LogPill>
+              <LogPillSecondary onClick={() => handleSetLog("Lunch")}>
+                Lunch
+              </LogPillSecondary>
+              <LogPillSecondary onClick={() => handleSetLog("Break")}>
+                Break
+              </LogPillSecondary>
             </PillWrapper>
           </StyledModal>
           <Overlay onClick={() => setOpen(false)} />

@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import { getReadableDate, getReadableTime } from "../utils/date";
+import { getReadableDate, getNewReadableTime } from "../utils/date";
 
 const Header = () => {
-  const [currentTime, setCurrentTime] = useState(getReadableTime);
+  const [currentTime, setCurrentTime] = useState(getNewReadableTime);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentTime(getReadableTime());
+      setCurrentTime(getNewReadableTime());
     }, 1000);
 
     return () => clearInterval(intervalId);

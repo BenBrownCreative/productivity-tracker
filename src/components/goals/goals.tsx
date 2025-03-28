@@ -1,10 +1,17 @@
 import { useState } from "react";
 import AddGoalsModal from "./components/addGoalsModal";
-import { type Goal } from "./components/goal";
+import type { Goal } from "../../models";
 import styled from "@emotion/styled";
 import { Button, Checkbox } from "@mui/material";
 import GoalProgress from "./components/goalProgress";
-import { presetGoals } from "./utils/presetGoals";
+import { Title } from "../../utils/commonStyles";
+import { AddCircleOutline } from "@mui/icons-material";
+
+const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 const GoalWrapper = styled.div`
   display: flex;
@@ -12,20 +19,12 @@ const GoalWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledButton = styled(Button)`
-  color: white;
-  background-color: var(--colors-primary);
-  &:hover {
-    background-color: theme;
-  }
-`;
+type Props = {
+  goals: Goal[];
+  setGoals: (goals: Goal[]) => void;
+};
 
-const Goals = () => {
-  const [goals, setGoals] = useState<Goal[]>([
-    presetGoals.coding,
-    presetGoals.pushUps,
-    presetGoals.quietTime,
-  ]);
+const Goals = ({ goals, setGoals }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -33,27 +32,30 @@ const Goals = () => {
     setGoals([...goals, goal]);
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
-      <h1>Today's Goals</h1>
-      <StyledButton
-        size="small"
-        variant="contained"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Manage Goals
-      </StyledButton>
+      <TitleWrapper>
+        <Title>Goals</Title>
+        <AddCircleOutline color="primary" onClick={openModal} />
+      </TitleWrapper>
+
       {goals.map(goal => (
         <GoalWrapper key={goal.name}>
-          {/* this needs to be toggleable by an edit */}
           {/* <StyledButton onClick={() => setGoals(goals.filter(g => g !== goal))}>
             <Remove />
           </StyledButton> */}
-          <Checkbox color="secondary" />
+          <Checkbox
+            color="secondary"
+            checked={goal.progress.value >= goal.progress.goal}
+          />
           <div>{goal.name}</div>
           {/* display progress */}
 
-          {goal?.progress && <GoalProgress progress={goal.progress} />}
+          {goal?.progress.goal > 1 && <GoalProgress progress={goal.progress} />}
         </GoalWrapper>
       ))}
       {isModalOpen && (

@@ -1,4 +1,4 @@
-import type { GoalProgress } from "./goal";
+import type { GoalProgress } from "../../../models";
 
 type Props = {
   progress: GoalProgress;

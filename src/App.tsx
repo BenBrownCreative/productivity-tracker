@@ -5,6 +5,9 @@ import Header from "./components/header";
 import Palette from "./utils/palette";
 import Log from "./components/log";
 import { Title } from "./utils/commonStyles";
+import { useState } from "react";
+import { presetGoals } from "./components/goals/utils/presetGoals";
+import { Goal } from "./models";
 
 const AppWrapper = styled.div`
   column-gap: 1rem;
@@ -25,13 +28,15 @@ const Section = styled.div`
 `;
 
 const App = () => {
+  const [goals, setGoals] = useState<Goal[]>(Object.values(presetGoals));
+
   return (
     <AppWrapper>
       <Palette>
         <Header />
         <BodyWrapper>
           <Section>
-            <Log />
+            <Log goals={goals} setGoals={setGoals} />
           </Section>
           <Section>
             <Title>Daily Notes</Title>
@@ -39,8 +44,12 @@ const App = () => {
             <p>tracking goals history</p>
             <p>need a way to preserve data</p>
             <p>Log: remove log?</p>
+            <p>
+              would be nice to see how long something took once the next log
+              active
+            </p>
           </Section>
-          <Goals />
+          <Goals goals={goals} setGoals={setGoals} />
         </BodyWrapper>
       </Palette>
     </AppWrapper>
