@@ -44,6 +44,7 @@ const App = () => {
             <p>tracking goals history</p>
             <p>need a way to preserve data</p>
             <p>Log: remove log?</p>
+            <p>Admin Task: call bank to activate iphone use of credit card</p>
             <p>
               would be nice to see how long something took once the next log
               active

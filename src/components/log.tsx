@@ -2,13 +2,19 @@ import styled from "@emotion/styled";
 import { SetStateAction, useState, Dispatch } from "react";
 import { Title } from "../utils/commonStyles";
 import { AddCircleOutline } from "@mui/icons-material";
-import { getElapsedMinutes, getReadableTime } from "../utils/date";
+import { getReadableTime } from "../utils/date";
 import type { Goal } from "../models/goal";
+import { updateGoalProgressByType } from "./goals/utils/updateGoalByType";
 
 const LogItem = styled.div`
   display: flex;
   column-gap: 1rem;
   align-items: baseline;
+  color: ${props =>
+    props.itemType === "other" ? "var(--colors-secondary)" : ""};
+`;
+const RightAlign = styled.p`
+  align-self: flex-end;
 `;
 const TitleWrapper = styled.div`
   display: flex;
@@ -67,25 +73,13 @@ const LogPillSecondary = styled.div`
   white-space: nowrap;
 `;
 
+type LogType = "goal" | "other";
+
 type Log = {
   time: number;
   message: string; // this will be a string or a goal so we can link to it and update progress
+  type: LogType;
 };
-
-const exampleLog = [
-  {
-    time: 1743177806468,
-    message: "Planning",
-  },
-  {
-    time: 1743178188228,
-    message: "Bible reading",
-  },
-  {
-    time: 1743178101165,
-    message: "Code",
-  },
-];
 
 type Props = {
   goals: Goal[];
@@ -93,7 +87,7 @@ type Props = {
 };
 
 const Log = ({ goals, setGoals }: Props) => {
-  const [log, setLog] = useState<Log[]>(exampleLog);
+  const [log, setLog] = useState<Log[]>([]);
   const [open, setOpen] = useState(false);
 
   const openModal = () => {
@@ -102,79 +96,33 @@ const Log = ({ goals, setGoals }: Props) => {
 
   const handleSetLogAndUpdateGoalProgress = (newLog: string) => {
     updateGoalProgress();
-    handleSetLog(newLog);
+    handleSetLog(newLog, "goal");
   };
 
   const updateGoalProgress = () => {
+    if (log.length === 0) return;
     const currentLog = log.slice(-1)[0];
-    // find the goal that matches the current log
+
+    if (currentLog?.type !== "goal") return;
+
     const currentGoal = goals.find(goal => goal.name === currentLog.message);
 
-    //   const getPromptNum = () => {
-    //     return prompt(
-    //       `How many ${currentGoal.name} did you do?`,
-    //       `${currentGoal.progress.value}`
-    //     );
-    // }
-
     if (currentGoal) {
-      function updateGoalByType(goal: Goal) {
-        switch (goal.type) {
-          case "number": {
-            const input = prompt(`How many ${currentGoal?.name} did you do?`);
-            const value = parseInt(input || "0", 10); // Convert input to a number
-            if (isNaN(value)) {
-              alert("Please enter a valid number.");
-              return goal; // Return the original goal if input is invalid
-            }
-            return {
-              ...goal,
-              progress: {
-                ...goal.progress,
-                value: value + goal.progress.value,
-              },
-            };
-          }
-          case "toggle":
-            return {
-              ...goal,
-              progress: {
-                ...goal.progress,
-                value: 1,
-              },
-            };
-          case "timed":
-            return {
-              ...goal,
-              progress: {
-                ...goal.progress,
-                value:
-                  goal.progress.value +
-                  getElapsedMinutes(Date.now(), currentLog.time),
-              },
-            };
-          default:
-            return goal;
-        }
-      }
-
-      const updatedGoal = updateGoalByType(currentGoal);
+      const updatedGoal = updateGoalProgressByType(
+        currentGoal,
+        currentLog.time
+      );
 
       setGoals(prev =>
         prev.map(goal =>
           goal.name === currentLog.message ? updatedGoal : goal
         )
       );
-
-      if (currentGoal.type === "timed") {
-        return;
-      }
     }
   };
 
-  const handleSetLog = (newLog: string) => {
-    // console.log("old log", log, newLog);
-    setLog(prev => [...prev, { time: Date.now(), message: newLog }]);
+  const handleSetLog = (newLog: string, type: LogType) => {
+    setLog(prev => [...prev, { time: Date.now(), message: newLog, type }]);
     setOpen(false);
   };
 
@@ -186,8 +134,8 @@ const Log = ({ goals, setGoals }: Props) => {
       </TitleWrapper>
 
       {log.map(item => (
-        <LogItem key={item.time}>
-          <p>{getReadableTime(item.time)}</p>
+        <LogItem itemType={item.type} key={item.time}>
+          <RightAlign>{getReadableTime(item.time)}</RightAlign>
           <p>{item.message}</p>
         </LogItem>
       ))}
@@ -212,10 +160,10 @@ const Log = ({ goals, setGoals }: Props) => {
             <p>Other</p>
 
             <PillWrapper>
-              <LogPillSecondary onClick={() => handleSetLog("Lunch")}>
+              <LogPillSecondary onClick={() => handleSetLog("Lunch", "other")}>
                 Lunch
               </LogPillSecondary>
-              <LogPillSecondary onClick={() => handleSetLog("Break")}>
+              <LogPillSecondary onClick={() => handleSetLog("Break", "other")}>
                 Break
               </LogPillSecondary>
             </PillWrapper>
